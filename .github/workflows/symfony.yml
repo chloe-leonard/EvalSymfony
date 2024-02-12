@@ -12,7 +12,7 @@ on:
     branches: [ "main" ]
 
 permissions:
-  contents: execute
+  contents: read
 
 jobs:
   symfony-tests:
