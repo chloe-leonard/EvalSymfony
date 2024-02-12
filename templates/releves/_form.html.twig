@@ -1,0 +1,36 @@
+{% if form is defined %}
+    <div class="container">
+        <div class="m-4">
+        {{ form_start(form) }}
+        </div>
+
+        <div class="m-5"  >
+
+            {{ form_widget(form) }}
+
+        </div >
+    </div>
+    <button type="submit" onclick="rafraichir()" class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+
+    {{ form_end(form) }}
+{% else %}
+    <p>Form is not defined.</p>
+{% endif %}
+
+<script>
+    function refreshPage() {
+
+        // Effectue une requête AJAX pour obtenir la nouvelle version de la page
+        $.ajax({
+            url: window.location.href, // Utilise l'URL actuelle avec la chaîne de requête aléatoire
+            type: 'GET',
+            success: function(data) {
+                // Met à jour le contenu de la page avec la nouvelle version
+                $('html').html(data);
+            },
+            error: function(error) {
+                console.log('Une erreur s\'est produite lors de la requête AJAX: ', error);
+            }
+        });
+    }
+</script>

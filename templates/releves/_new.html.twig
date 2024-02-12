@@ -1,0 +1,12 @@
+
+{% block body %}
+    <br>
+    <br>
+    <div class="container">
+        <h1>Ajouter un relevé</h1>
+
+        {{ include('releves/_form.html.twig') }}
+        <a class="btn btn-primary" href="/lieu/new">Administrer les lieux</a>
+
+    </div>
+{% endblock %}

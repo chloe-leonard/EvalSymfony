@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Releves index{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <h1>Releves index</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Lieu</th>
+                    <th>Releve_brut</th>
+                    <th>Tableau</th>
+                    <th>Visualisation</th>
+                    <th>modifier</th>
+                    <th>supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for resultat in resultats %}
+                <tr>
+                    <td>{{ resultat.releve.date ? resultat.releve.date|date('d/m/Y') : '' }}</td>
+                    <!--recupere l id_lieu de releves (table releves) pour afficher le lieu correspondant (a trouver dans le table lieu)-->
+                    <td>{{ resultat.releve.lieuid.commune }}</td>
+                    <td>{{ resultat.releve.releveBrut }}</td>
+                    <td>
+                        {% set conversion = resultat.releve.releveBrut|split('/') %}
+                        <table class="table table-striped">
+                            <tr>
+                                <td>{{ conversion[0] }}</td>
+                                <td>{{ conversion[1] }}</td>
+                                <td>{{ conversion[2] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ conversion[3] }}</td>
+                                <td>{{ conversion[4] }}</td>
+                                <td>{{ conversion[5] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ conversion[6] }}</td>
+                                <td>{{ conversion[7] }}</td>
+                                <td>{{ conversion[8] }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <!--{ dump(resultats)}}-->
+                            <div class="tableau">
+                            {% for tableauInterne in resultat.tableau %}
+                                <div class="test grid-container">
+                                    {% for row in tableauInterne %}  
+                                            {% for cell in row %}
+                                                {% if cell == 1 %}
+                                                    <div class="test2" style="background-color: green;"></div>
+                                                {% else %}
+                                                    <div class="test2" style="background-color: white;"></div>
+                                                {% endif %}
+                                            {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <style>
+                            .test{
+                                width: 60px;
+                                height: 60px;
+                            }
+                            .grid-container {
+                                display: grid;
+                                grid-template-columns: auto auto auto;
+                                /*border */
+
+                               
+                            }
+                            .tableau {
+                                display: grid;
+                                grid-template-columns: auto auto auto;
+                                width:185px;
+                                height:185px;
+                            }
+
+
+                            .test2{
+                                width: 20px; /* Largeur de chaque cellule */
+                                height: 20px; /* Hauteur de chaque cellule */
+                                text-align: center; /* Centrer le texte horizontalement */
+                                vertical-align: middle; /* Centrer le texte verticalement */
+                                                                             border: 1px solid black;
+                                border: 1px solid grey;
+
+                            }
+                        </style>
+                    </td>
+                    <td>
+                        <a class="btn btn-info" href="{{ path('app_releves_edit', {'id': resultat.releve.id}) }}">Modifier</a>
+                    </td>
+                    <td>
+                        {{ include('releves/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <!--<a href="{ path('app_releves_new') }">Nouveau</a>-->
+
+        <!--execution du controller app_releves_new pour afficher le formulaire-->
+        {{ render(controller('App\\Controller\\RelevesController::new')) }}
+
+    </div>
+{% endblock %}

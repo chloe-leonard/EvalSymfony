@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Releves{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Edit Releves</h1>
+
+
+        {{ include('releves/_form.html.twig') }}
+
+        <a class="btn btn-light" href="{{ path('app_releves_index') }}">Retour</a>
+
+        {{ include('releves/_delete_form.html.twig') }}
+    </div>
+    <style>
+        .container{
+            margin-top: 50px;
+        }
+        btn {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    </style>
+
+{% endblock %}
+
